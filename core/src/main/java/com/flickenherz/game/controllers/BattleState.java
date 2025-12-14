@@ -1,6 +1,6 @@
 package com.flickenherz.game.controllers;
 
-// Current state of battle encounter
+// Aktueller Zustand der Kampfbegegnung
 public enum BattleState {
     PLAYER_TURN,
     ENEMY_TURN,

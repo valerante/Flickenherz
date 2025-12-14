@@ -1,6 +1,6 @@
 package com.flickenherz.game.entities;
 
-// Player character
+// Spielercharakter
 public class Player {
     public String name;
     public int hp;
@@ -9,7 +9,7 @@ public class Player {
     public int maxSanity;
     public int score;
 
-    // Initialize player with max HP and sanity
+    // Initialisiere Spieler mit maximaler HP und Sanity
     public Player(String name) {
         this.name = name;
         this.maxHp = 100;
@@ -19,7 +19,7 @@ public class Player {
         this.score = 0;
     }
 
-    // Random damage attack
+    // Zufälliger Schadensangriff
     public int basicAttack() {
         return 10 + (int)(Math.random() * 9);
     }

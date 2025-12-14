@@ -9,14 +9,14 @@ import com.flickenherz.game.bullet.BulletPattern;
 import com.flickenherz.game.bullet.BulletSpawner;
 import com.flickenherz.game.bullet.Arena;
 
-// Manages bullet hell attack sequences
+// Verwaltet Bullet-Hell-Angriffssequenzen
 public class BulletHellManager {
 
     private final Array<Bullet> bullets;
     private final Arena arena;
     private final AudioManager audio;
     
-    // Object pool for bullet reuse
+    // Objektpool für Kugelwiederverwendung
     private final Pool<Bullet> bulletPool = new Pool<Bullet>(200, 400) {
         @Override
         protected Bullet newObject() {
@@ -41,7 +41,7 @@ public class BulletHellManager {
         return bullets;
     }
 
-    // Start bullet hell attack with pattern based on enemy type
+    // Starte Bullet-Hell-Angriff mit Muster basierend auf Gegnertyp
     public void startAttack(Enemy enemy, String messageText, String actionText) {
         arena.inBulletHell = true;
         arena.attackTimer = 0f;
@@ -80,7 +80,7 @@ public class BulletHellManager {
         audio.playEnemyAttackStart();
     }
 
-    // Update bullets and handle spawning
+    // Aktualisiere Kugeln und verarbeite Spawning
     public void update(float delta) {
         if (!arena.inBulletHell) return;
 
@@ -95,13 +95,13 @@ public class BulletHellManager {
             spawnBulletPattern();
         }
 
-        // Cache boundary values for despawn checks
+        // Grenzwerte für Despawn-Prüfungen cachen
         float minX = arena.x - BOUNDARY_MARGIN;
         float maxX = arena.x + Arena.WIDTH + BOUNDARY_MARGIN;
         float minY = arena.y - BOUNDARY_MARGIN;
         float maxY = arena.y + Arena.HEIGHT + BOUNDARY_MARGIN;
 
-        // Iterate backwards for safe removal
+        // Rückwärts iterieren für sicheres Entfernen
         for (int i = bullets.size - 1; i >= 0; i--) {
             Bullet b = bullets.get(i);
             if (!b.alive) {
@@ -130,14 +130,14 @@ public class BulletHellManager {
         return arena.inBulletHell && arena.attackTimer >= arena.attackDuration;
     }
 
-    // End attack and return bullets to pool
+    // Beende Angriff und gib Kugeln an Pool zurück
     public void endAttack() {
         arena.inBulletHell = false;
         bulletPool.freeAll(bullets);
         bullets.clear();
     }
 
-    // Reset manager to initial state
+    // Manager auf Anfangszustand zurücksetzen
     public void reset() {
         arena.inBulletHell = false;
         bulletPool.freeAll(bullets);
@@ -150,7 +150,7 @@ public class BulletHellManager {
         return bulletPool;
     }
 
-    // Spawn bullets based on current pattern (Father enemy has higher difficulty)
+    // Erzeuge Kugeln basierend auf aktuellem Muster (Vater-Gegner hat höhere Schwierigkeit)
     private void spawnBulletPattern() {
         boolean isFather = currentEnemy != null && currentEnemy.getName().equals("Father");
         

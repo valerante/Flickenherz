@@ -1,6 +1,6 @@
 package com.flickenherz.game.entities;
 
-// Second enemy: Porcelain doll
+// Zweiter Gegner: Porzellanpuppe
 public class PorcelainDoll implements Enemy {
 
     public String name = "Porzellanpuppe";

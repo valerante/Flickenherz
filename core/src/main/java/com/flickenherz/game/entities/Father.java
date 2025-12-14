@@ -1,6 +1,6 @@
 package com.flickenherz.game.entities;
 
-// Final boss: Father
+// Endboss: Vater
 public class Father implements Enemy {
     public String name;
     public int hp;

@@ -3,10 +3,10 @@ package com.flickenherz.game.bullet;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 
-// Spawns different bullet attack patterns
+// Erzeugt verschiedene Kugelangriffsmuster
 public class BulletSpawner {
 
-    // Spawn horizontal bullet with wave motion
+    // Erzeuge horizontale Kugel mit Wellenbewegung
     public static void spawnHorizontalWave(Array<Bullet> bullets, Arena arena, float speed, Pool<Bullet> pool) {
         boolean fromLeft = Math.random() < 0.5;
         float y = arena.y + 40 + (float) Math.random() * (Arena.HEIGHT - 80);
@@ -25,7 +25,7 @@ public class BulletSpawner {
         bullets.add(b);
     }
 
-    // Spawn vertical bullet from top
+    // Erzeuge vertikale Kugel von oben
     public static void spawnVerticalRain(Array<Bullet> bullets, Arena arena, float speed, Pool<Bullet> pool) {
         float x = arena.x + 40f + (float) Math.random() * (Arena.WIDTH - 80f);
         float y = arena.y + Arena.HEIGHT + 30f;
@@ -35,7 +35,7 @@ public class BulletSpawner {
         bullets.add(b);
     }
 
-    // Spawn horizontal wave in evenly spaced rows
+    // Erzeuge horizontale Welle in gleichmäßig verteilten Reihen
     public static int spawnWaveRows(Array<Bullet> bullets, Arena arena, float horizontalSpeed, float waveAmplitude, float waveFrequency, int spawnIndex, Pool<Bullet> pool) {
         boolean fromLeft = Math.random() < 0.5;
         
@@ -61,7 +61,7 @@ public class BulletSpawner {
         return spawnIndex + 1;
     }
 
-    // Spawn circular burst of bullets from center
+    // Erzeuge kreisförmigen Kugelschwall aus der Mitte
     public static float spawnCircleBurst(Array<Bullet> bullets, Arena arena, float speed, float angleOffset, int count, Pool<Bullet> pool) {
         float cx = arena.x + Arena.WIDTH / 2f;
         float cy = arena.y + Arena.HEIGHT / 2f;
@@ -83,7 +83,7 @@ public class BulletSpawner {
         return angleOffset;
     }
 
-    // Spawn vertical beam of bullets
+    // Erzeuge vertikalen Kugelstrahl
     public static void spawnTrackingBeam(Array<Bullet> bullets, Arena arena, float beamX, float speed, Pool<Bullet> pool) {
         float beamWidth = 40f;
         int bulletsPerRow = 3;
@@ -97,7 +97,7 @@ public class BulletSpawner {
         }
     }
 
-    // Spawn bullets converging from all edges towards center
+    // Erzeuge konvergierende Kugeln von allen Rändern zur Mitte
     public static void spawnConvergingCross(Array<Bullet> bullets, Arena arena, float speed, Pool<Bullet> pool) {
         float cx = arena.x + Arena.WIDTH / 2f;
         float cy = arena.y + Arena.HEIGHT / 2f;

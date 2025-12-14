@@ -1,6 +1,6 @@
 package com.flickenherz.game.entities;
 
-// Third enemy: Cuddlefiend
+// Dritter Gegner: Cuddlefiend
 public class Cuddlefiend implements Enemy {
     public String name;
     public int hp;

@@ -3,7 +3,7 @@ package com.flickenherz.game.managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
-// Manages sound effects
+// Verwaltet Soundeffekte
 public class AudioManager {
 
     private final Sound sfxMenuMove;
@@ -20,7 +20,7 @@ public class AudioManager {
         sfxEnemyAttackStart = safeLoad("sfx_enemy_attack_start.wav");
     }
 
-    // Safe load to prevent crashes from missing audio files
+    // Sicheres Laden, um Abstürze bei fehlenden Audiodateien zu verhindern
     private Sound safeLoad(String path) {
         try {
             return Gdx.audio.newSound(Gdx.files.internal(path));

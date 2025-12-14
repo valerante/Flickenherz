@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.flickenherz.game.entities.Enemy;
 import com.flickenherz.game.bullet.Arena;
 
-// Manages sprite rendering and positioning
+// Verwaltet Sprite-Rendering und -Positionierung
 public class SpriteManager {
 
     private final Texture teddyTexture;
@@ -16,7 +16,7 @@ public class SpriteManager {
     private final Texture fatherTexture;
     private final Texture girlTexture;
 
-    // Pre-calculated sprite positions
+    // Vorberechnete Sprite-Positionen
     public final float teddyX;
     public final float teddyY;
     public final float teddyWidth;
@@ -42,14 +42,14 @@ public class SpriteManager {
     public final float girlWidth;
     public final float girlHeight;
 
-    // Sprite scale factors
+    // Sprite-Skalierungsfaktoren
     private static final float TEDDY_SCALE = 0.40f;
     private static final float DOLL_SCALE = 0.50f;
     private static final float CUDDLEFIEND_SCALE = 0.50f;
     private static final float FATHER_SCALE = 0.90f;
     private static final float GIRL_SCALE = 0.85f;
     
-    // Cached positioning constants
+    // Gecachte Positionierungskonstanten
     private static final float VIRTUAL_WIDTH_MULTIPLIER = 0.59f;
     private static final float WIDTH_DIVISOR = 2.2f;
     private static final float HEIGHT_OFFSET = -250f;
@@ -59,7 +59,7 @@ public class SpriteManager {
     private static final float GIRL_WIDTH_DIVISOR = 1.4f;
     private static final float GIRL_HEIGHT_DIVISOR = 2.3f;
 
-    // Load textures and calculate sprite positions
+    // Lade Texturen und berechne Sprite-Positionen
     public SpriteManager(int virtualWidth, int virtualHeight, Arena arena) {
         teddyTexture = new Texture(Gdx.files.internal("teddy.png"));
         girlTexture = new Texture(Gdx.files.internal("girl.png"));
@@ -95,7 +95,7 @@ public class SpriteManager {
         girlY = arena.y + Arena.HEIGHT * GIRL_ARENA_HEIGHT_MULT - girlHeight / GIRL_HEIGHT_DIVISOR;
     }
 
-    // Draw enemy sprite with hit effect
+    // Zeichne Gegner-Sprite mit Treffereffekt
     public void drawEnemy(SpriteBatch batch, Enemy enemy, boolean hitActive) {
         float scaleFactor = hitActive ? 1.08f : 1f;
 
@@ -112,7 +112,7 @@ public class SpriteManager {
         }
     }
 
-    // Draw girl sprite with hit effect
+    // Zeichne Mädchen-Sprite mit Treffereffekt
     public void drawGirl(SpriteBatch batch, boolean hitActive, boolean inBulletHell) {
         if (inBulletHell) return;
 
@@ -120,7 +120,7 @@ public class SpriteManager {
         drawSprite(batch, girlTexture, girlX, girlY, girlWidth, girlHeight, scaleFactor, hitActive);
     }
 
-    // Draw sprite with scaling and color tint
+    // Zeichne Sprite mit Skalierung und Farbton
     private void drawSprite(SpriteBatch batch, Texture tex, float x, float y, float width, float height,
                             float scaleFactor, boolean hitActive) {
         float drawW = width * scaleFactor;
@@ -137,7 +137,7 @@ public class SpriteManager {
         batch.draw(tex, x - offX, y - offY, drawW, drawH);
     }
 
-    // Draw girl with attack animation
+    // Zeichne Mädchen mit Angriffsanimation
     public void drawGirlWithAnimation(SpriteBatch batch, boolean hitActive, boolean inBulletHell, float animationProgress) {
         if (inBulletHell) return;
 
@@ -145,7 +145,7 @@ public class SpriteManager {
         drawSpriteWithAnimation(batch, girlTexture, girlX, girlY, girlWidth, girlHeight, scaleFactor, hitActive, animationProgress);
     }
 
-    // Draw sprite with rotation and movement animation
+    // Zeichne Sprite mit Rotations- und Bewegungsanimation
     private void drawSpriteWithAnimation(SpriteBatch batch, Texture tex, float x, float y, float width, float height,
                                         float scaleFactor, boolean hitActive, float animationProgress) {
         float drawW = width * scaleFactor;
@@ -171,7 +171,7 @@ public class SpriteManager {
         batch.draw(tex, animatedX - offX, animatedY - offY, originX, originY, drawW, drawH, 1f, 1f, rotation, 0, 0, tex.getWidth(), tex.getHeight(), false, false);
     }
 
-    // Dispose textures
+    // Texturen freigeben
     public void dispose() {
         teddyTexture.dispose();
         dollTexture.dispose();

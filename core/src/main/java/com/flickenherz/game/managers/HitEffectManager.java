@@ -1,6 +1,6 @@
 package com.flickenherz.game.managers;
 
-// Manages timed visual hit effects
+// Verwaltet zeitgesteuerte visuelle Treffereffekte
 public class HitEffectManager {
 
     private static final float HIT_DURATION = 0.15f;
@@ -11,7 +11,7 @@ public class HitEffectManager {
     private boolean girlHitActive = false;
     private float girlHitTimer = 0f;
 
-    // Update timers and deactivate expired effects
+    // Aktualisiere Timer und deaktiviere abgelaufene Effekte
     public void update(float delta) {
         if (teddyHitActive) {
             teddyHitTimer -= delta;

@@ -1,19 +1,19 @@
 package com.flickenherz.game.bullet;
 
-// Bullet projectile with optional wave motion
+// Kugel-Projektil mit optionaler Wellenbewegung
 public class Bullet {
     public float x, y;
     public float vx, vy;
     public float radius;
     public boolean alive = true;
     
-    // Wave motion parameters
+    // Wellenbewegungsparameter
     public float baseY;
     public float waveAmplitude = 0f;
     public float waveFrequency = 0f;
     public float travelDistance = 0f;
     
-    // Cached for faster collision detection
+    // Gecacht für schnellere Kollisionserkennung
     public float radiusSquared;
 
     public Bullet() {}
@@ -29,7 +29,7 @@ public class Bullet {
         this.baseY = y;
     }
     
-    // Reuse bullet from object pool
+    // Kugel aus Objektpool wiederverwenden
     public void reset(float x, float y, float vx, float vy, float radius) {
         this.x = x;
         this.y = y;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-// Bullet hell combat arena
+// Bullet-Hell-Kampfarena
 public class Arena {
     public static final float WIDTH = 600f;
     public static final float HEIGHT = 320f;
@@ -37,7 +37,7 @@ public class Arena {
         soulY = y + HEIGHT / 2f;
     }
 
-    // Handle WASD movement with normalized diagonal speed
+    // WASD-Bewegung mit normalisierter Diagonalgeschwindigkeit
     public void handleMovement(float delta) {
         float dx = 0;
         float dy = 0;

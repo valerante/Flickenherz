@@ -3,13 +3,13 @@ package com.flickenherz.game.managers;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-// Renders battle UI elements
+// Rendert Kampf-UI-Elemente
 public class BattleUI {
 
     private final BitmapFont font;
     private final BitmapFont fontBig;
     
-    // StringBuilder for efficient string operations
+    // StringBuilder für effiziente String-Operationen
     private final StringBuilder stringBuilder = new StringBuilder(50);
 
     public BattleUI(BitmapFont font, BitmapFont fontBig) {
@@ -17,7 +17,7 @@ public class BattleUI {
         this.fontBig = fontBig;
     }
 
-    // Draw message area with battle status
+    // Zeichne Nachrichtenbereich mit Kampfstatus
     public void drawMessageArea(SpriteBatch batch, String messageText, String actionText, int virtualHeight) {
         font.getData().setScale(1.6f);
         font.draw(batch, messageText, 120, virtualHeight / 2f + 60);
@@ -26,7 +26,7 @@ public class BattleUI {
         font.draw(batch, actionText, 120, virtualHeight / 2f - 10);
     }
 
-    // Draw bottom menu with highlighted selection
+    // Zeichne unteres Menü mit hervorgehobener Auswahl
     public void drawBottomMenu(SpriteBatch batch, String[] menuItems, int selectedIndex, boolean highlightActive, int virtualWidth) {
         float outerMargin = 60f;
         float baseY = outerMargin + 80;
@@ -53,7 +53,7 @@ public class BattleUI {
         }
     }
 
-    // Draw score in top-right corner
+    // Zeichne Punktzahl in der oberen rechten Ecke
     public void drawScore(SpriteBatch batch, int score, int virtualWidth, int virtualHeight) {
         font.getData().setScale(1.5f);
         stringBuilder.setLength(0);

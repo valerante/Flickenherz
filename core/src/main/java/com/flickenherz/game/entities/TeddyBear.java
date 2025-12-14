@@ -1,6 +1,6 @@
 package com.flickenherz.game.entities;
 
-// First enemy: Torn teddy bear
+// Erster Gegner: Zerrissener Teddybär
 public class TeddyBear implements Enemy {
     public String name;
     public int hp;

@@ -1,6 +1,6 @@
 package com.flickenherz.game.managers;
 
-// Controls menu navigation and state
+// Steuert Menünavigation und -zustand
 public class MenuController {
 
     public enum MenuState {

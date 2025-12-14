@@ -1,6 +1,6 @@
 package com.flickenherz.game.entities;
 
-// Enemy interface
+// Gegner-Interface
 public interface Enemy {
     enum EnemyType { TEDDY, DOLL, OTHER }
 
