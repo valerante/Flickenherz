@@ -9,6 +9,7 @@ import com.flickenherz.game.entities.PorcelainDoll;
 import com.flickenherz.game.entities.Cuddlefiend;
 import com.flickenherz.game.entities.Father;
 
+// Manages enemy encounter sequence
 public class BattleController {
     private List<Enemy> enemies = new ArrayList<>();
     private int currentIndex = 0;

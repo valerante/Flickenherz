@@ -1,50 +1,23 @@
 package com.flickenherz.game.managers;
 
-/**
- * Controller for managing menu navigation and state during battles.
- * Handles player menu interactions, menu item selection, and tracks current menu state.
- */
+// Controls menu navigation and state
 public class MenuController {
 
-    /**
-     * Enum representing different states of the battle menu system.
-     */
     public enum MenuState {
         MAIN_MENU, ATTACK_SUBMENU, ENEMY_TURN, WIN, LOSE
     }
 
-    /** Main menu items available to the player */
     private final String[] menuItems = {"FIGHT", "ITEM"};
-    
-    /** Attack submenu items showing different attack types */
     private final String[] attackSubmenuItems = {"SLASH", "STRIKE", "HEAVY", "QUICK"};
-    
-    /** Currently selected menu item index */
     private int selectedIndex = 0;
-    
-    /** Current state of the menu system */
     private MenuState menuState;
-    
-    /** Audio manager for menu sound effects */
     private final AudioManager audio;
 
-    /**
-     * Creates a new menu controller with audio support.
-     * Initializes the menu in MAIN_MENU state.
-     * 
-     * @param audio AudioManager instance for playing menu sounds
-     */
     public MenuController(AudioManager audio) {
         this.audio = audio;
         this.menuState = MenuState.MAIN_MENU;
     }
 
-    /**
-     * Gets the current menu items based on menu state.
-     * Returns attack submenu items if in attack submenu, otherwise main menu items.
-     * 
-     * @return Array of menu item strings
-     */
     public String[] getMenuItems() {
         if (menuState == MenuState.ATTACK_SUBMENU) {
             return attackSubmenuItems;
@@ -52,29 +25,16 @@ public class MenuController {
         return menuItems;
     }
 
-    /**
-     * Gets the currently selected menu item index.
-     * 
-     * @return Index of the selected item
-     */
     public int getSelectedIndex() {
         return selectedIndex;
     }
 
-    /**
-     * Navigates to the left in the menu (wraps around).
-     * Plays menu navigation sound effect.
-     */
     public void navigateLeft() {
         String[] currentMenu = getMenuItems();
         selectedIndex = (selectedIndex - 1 + currentMenu.length) % currentMenu.length;
         audio.playMenuMove();
     }
 
-    /**
-     * Navigates to the right in the menu (wraps around).
-     * Plays menu navigation sound effect.
-     */
     public void navigateRight() {
         String[] currentMenu = getMenuItems();
         selectedIndex = (selectedIndex + 1) % currentMenu.length;

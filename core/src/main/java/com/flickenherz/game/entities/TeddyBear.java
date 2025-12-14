@@ -1,40 +1,21 @@
 package com.flickenherz.game.entities;
 
-/**
- * First enemy: A torn teddy bear.
- * Represents the first threat in the nightmare sequence.
- */
+// First enemy: Torn teddy bear
 public class TeddyBear implements Enemy {
-    /** Enemy name */
     public String name;
-    
-    /** Current health points */
     public int hp;
-    
-    /** Maximum health points */
     public int maxHp;
 
-    /**
-     * Creates a new teddy bear enemy with 80 HP.
-     */
     public TeddyBear() {
         this.name = "Zerrissener Teddybär";
         this.maxHp = 80;
         this.hp = maxHp;
     }
 
-    /**
-     * Claw attack dealing physical damage.
-     * @return Damage dealt (8-14 HP)
-     */
     public int clawAttack() {
         return 8 + (int)(Math.random() * 7);
     }
 
-    /**
-     * Fear attack dealing psychological damage.
-     * @return Damage dealt (4-8 HP)
-     */
     public int fearAttack() {
         return 4 + (int)(Math.random() * 5);
     }
