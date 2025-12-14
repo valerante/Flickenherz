@@ -1,31 +1,58 @@
 package com.flickenherz.game.entities;
 
+/**
+ * Final boss: Father.
+ * The most powerful enemy with 250 HP and all previous enemy attacks enhanced.
+ */
 public class Father implements Enemy {
+    /** Enemy name */
     public String name;
+    
+    /** Current health points */
     public int hp;
+    
+    /** Maximum health points */
     public int maxHp;
 
+    /**
+     * Creates a new Father enemy with 250 HP.
+     */
     public Father() {
         this.name = "Father";
-        this.maxHp = 250;  // Significantly more HP than Cuddlefiend (160)
+        this.maxHp = 250;
         this.hp = maxHp;
     }
 
-    // All previous attacks from Teddy, Doll, and Cuddlefiend
+    /**
+     * Enhanced claw attack from teddy bear.
+     * @return Damage dealt (12-21 HP)
+     */
     public int clawAttack() {
-        return 12 + (int)(Math.random() * 10);  // 12-21 damage (stronger)
+        return 12 + (int)(Math.random() * 10);
     }
 
+    /**
+     * Enhanced fear attack from teddy bear.
+     * @return Damage dealt (8-16 HP)
+     */
     public int fearAttack() {
-        return 8 + (int)(Math.random() * 9);  // 8-16 damage (stronger)
+        return 8 + (int)(Math.random() * 9);
     }
 
+    /**
+     * Enhanced shard slash attack from doll.
+     * @return Damage dealt (14-23 HP)
+     */
     public int shardSlash() {
-        return 14 + (int)(Math.random() * 10);  // 14-23 damage (stronger)
+        return 14 + (int)(Math.random() * 10);
     }
 
+    /**
+     * Enhanced lullaby whisper attack from doll.
+     * @return Damage dealt (12-21 HP)
+     */
     public int lullabyWhisper() {
-        return 12 + (int)(Math.random() * 10);  // 12-21 damage (stronger)
+        return 12 + (int)(Math.random() * 10);
     }
 
     @Override

@@ -1,40 +1,38 @@
 package com.flickenherz.game.bullet;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 
 public class BulletSpawner {
 
-    public static void spawnHorizontalWave(Array<Bullet> bullets, Arena arena, float speed) {
+    public static void spawnHorizontalWave(Array<Bullet> bullets, Arena arena, float speed, Pool<Bullet> pool) {
         boolean fromLeft = Math.random() < 0.5;
         float y = arena.y + 40 + (float) Math.random() * (Arena.HEIGHT - 80);
 
-        Bullet b = new Bullet();
-        b.radius = 10f;
-        b.y = y;
-
+        Bullet b = pool.obtain();
+        float x, vx;
         if (fromLeft) {
-            b.x = arena.x - 30f;
-            b.vx = speed;
+            x = arena.x - 30f;
+            vx = speed;
         } else {
-            b.x = arena.x + Arena.WIDTH + 30f;
-            b.vx = -speed;
+            x = arena.x + Arena.WIDTH + 30f;
+            vx = -speed;
         }
-
-        b.vy = 0f;
+        
+        b.reset(x, y, vx, 0f, 10f);
         bullets.add(b);
     }
 
-    public static void spawnVerticalRain(Array<Bullet> bullets, Arena arena, float speed) {
-        Bullet b = new Bullet();
-        b.radius = 10f;
-        b.x = arena.x + 40f + (float) Math.random() * (Arena.WIDTH - 80f);
-        b.y = arena.y + Arena.HEIGHT + 30f;
-        b.vx = 0f;
-        b.vy = -speed;
+    public static void spawnVerticalRain(Array<Bullet> bullets, Arena arena, float speed, Pool<Bullet> pool) {
+        float x = arena.x + 40f + (float) Math.random() * (Arena.WIDTH - 80f);
+        float y = arena.y + Arena.HEIGHT + 30f;
+        
+        Bullet b = pool.obtain();
+        b.reset(x, y, 0f, -speed, 10f);
         bullets.add(b);
     }
 
-    public static int spawnWaveRows(Array<Bullet> bullets, Arena arena, float horizontalSpeed, float waveAmplitude, float waveFrequency, int spawnIndex) {
+    public static int spawnWaveRows(Array<Bullet> bullets, Arena arena, float horizontalSpeed, float waveAmplitude, float waveFrequency, int spawnIndex, Pool<Bullet> pool) {
         boolean fromLeft = Math.random() < 0.5;
         
         // Calculate Y position - cycle through the arena height
@@ -42,43 +40,39 @@ public class BulletSpawner {
         float rowSpacing = Arena.HEIGHT / (float) (totalRows - 1);
         float yPosition = arena.y + (spawnIndex % totalRows) * rowSpacing;
         
-        Bullet b = new Bullet();
-        b.radius = 9f;
-        b.y = yPosition;
-        b.baseY = yPosition;
-
+        Bullet b = pool.obtain();
+        float x, vx;
         if (fromLeft) {
-            b.x = arena.x - 30f;
-            b.vx = horizontalSpeed;
+            x = arena.x - 30f;
+            vx = horizontalSpeed;
         } else {
-            b.x = arena.x + Arena.WIDTH + 30f;
-            b.vx = -horizontalSpeed;
+            x = arena.x + Arena.WIDTH + 30f;
+            vx = -horizontalSpeed;
         }
 
-        // Set wave parameters for slow, fluent motion
-        b.vy = 0f;
+        // Reset bullet with wave parameters
+        b.reset(x, yPosition, vx, 0f, 9f);
         b.waveAmplitude = waveAmplitude;
         b.waveFrequency = waveFrequency;
-        b.travelDistance = 0f;
         bullets.add(b);
         
         return spawnIndex + 1;
     }
 
-    public static float spawnCircleBurst(Array<Bullet> bullets, Arena arena, float speed, float angleOffset, int count) {
+    public static float spawnCircleBurst(Array<Bullet> bullets, Arena arena, float speed, float angleOffset, int count, Pool<Bullet> pool) {
         float cx = arena.x + Arena.WIDTH / 2f;
         float cy = arena.y + Arena.HEIGHT / 2f;
+        
+        // Pre-calculate angle increment
+        float angleIncrement = (float) (2 * Math.PI / count);
 
         for (int i = 0; i < count; i++) {
-            float baseAngle = (float) (2 * Math.PI * i / count);
-            float angle = baseAngle + angleOffset;
+            float angle = angleIncrement * i + angleOffset;
+            float cosAngle = (float) Math.cos(angle);
+            float sinAngle = (float) Math.sin(angle);
 
-            Bullet b = new Bullet();
-            b.radius = 6f;
-            b.x = cx;
-            b.y = cy;
-            b.vx = (float) Math.cos(angle) * speed;
-            b.vy = (float) Math.sin(angle) * speed;
+            Bullet b = pool.obtain();
+            b.reset(cx, cy, cosAngle * speed, sinAngle * speed, 6f);
             bullets.add(b);
         }
 
@@ -88,7 +82,7 @@ public class BulletSpawner {
     }
 
     // New attack pattern: Vertical beam that tracks player position then locks and shoots
-    public static void spawnTrackingBeam(Array<Bullet> bullets, Arena arena, float beamX, float speed) {
+    public static void spawnTrackingBeam(Array<Bullet> bullets, Arena arena, float beamX, float speed, Pool<Bullet> pool) {
         // Spawn bullets along the vertical line at beamX position
         // Create a dense vertical line of bullets
         float beamWidth = 40f; // Width of the beam
@@ -98,18 +92,14 @@ public class BulletSpawner {
         for (int i = 0; i < bulletsPerRow; i++) {
             float offsetX = (i - 1) * (beamWidth / 2f); // -1, 0, 1 positions
             
-            Bullet b = new Bullet();
-            b.radius = 10f;
-            b.x = beamX + offsetX;
-            b.y = arena.y + Arena.HEIGHT;
-            b.vx = 0f;
-            b.vy = -speed;
+            Bullet b = pool.obtain();
+            b.reset(beamX + offsetX, arena.y + Arena.HEIGHT, 0f, -speed, 10f);
             bullets.add(b);
         }
     }
 
     // New attack pattern: Bullets converge from all four corners and edges
-    public static void spawnConvergingCross(Array<Bullet> bullets, Arena arena, float speed) {
+    public static void spawnConvergingCross(Array<Bullet> bullets, Arena arena, float speed, Pool<Bullet> pool) {
         float cx = arena.x + Arena.WIDTH / 2f;
         float cy = arena.y + Arena.HEIGHT / 2f;
 
@@ -122,18 +112,16 @@ public class BulletSpawner {
         };
 
         for (float[] corner : corners) {
-            Bullet b = new Bullet();
-            b.radius = 8f;
-            b.x = corner[0];
-            b.y = corner[1];
+            Bullet b = pool.obtain();
+            float x = corner[0];
+            float y = corner[1];
 
             // Calculate direction towards center
-            float dx = cx - b.x;
-            float dy = cy - b.y;
+            float dx = cx - x;
+            float dy = cy - y;
             float len = (float) Math.sqrt(dx * dx + dy * dy);
             
-            b.vx = (dx / len) * speed;
-            b.vy = (dy / len) * speed;
+            b.reset(x, y, (dx / len) * speed, (dy / len) * speed, 8f);
             bullets.add(b);
         }
 
@@ -146,19 +134,17 @@ public class BulletSpawner {
         };
 
         for (float[] edge : edges) {
-            Bullet b = new Bullet();
-            b.radius = 8f;
-            b.x = edge[0];
-            b.y = edge[1];
+            float x = edge[0];
+            float y = edge[1];
 
             // Calculate direction towards center
-            float dx = cx - b.x;
-            float dy = cy - b.y;
+            float dx = cx - x;
+            float dy = cy - y;
             float len = (float) Math.sqrt(dx * dx + dy * dy);
             
             if (len > 0) {
-                b.vx = (dx / len) * speed;
-                b.vy = (dy / len) * speed;
+                Bullet b = pool.obtain();
+                b.reset(x, y, (dx / len) * speed, (dy / len) * speed, 8f);
                 bullets.add(b);
             }
         }
@@ -176,19 +162,17 @@ public class BulletSpawner {
         };
 
         for (float[] offset : offsets) {
-            Bullet b = new Bullet();
-            b.radius = 7f;
-            b.x = offset[0];
-            b.y = offset[1];
+            float x = offset[0];
+            float y = offset[1];
 
             // Calculate direction towards center
-            float dx = cx - b.x;
-            float dy = cy - b.y;
+            float dx = cx - x;
+            float dy = cy - y;
             float len = (float) Math.sqrt(dx * dx + dy * dy);
             
             if (len > 0) {
-                b.vx = (dx / len) * speed;
-                b.vy = (dy / len) * speed;
+                Bullet b = pool.obtain();
+                b.reset(x, y, (dx / len) * speed, (dy / len) * speed, 7f);
                 bullets.add(b);
             }
         }

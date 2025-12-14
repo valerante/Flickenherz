@@ -1,9 +1,18 @@
 package com.flickenherz.game.entities;
 
+/**
+ * Second enemy: A porcelain doll.
+ * More durable than the teddy bear with 120 HP.
+ */
 public class PorcelainDoll implements Enemy {
 
+    /** Enemy name */
     public String name = "Porzellanpuppe";
+    
+    /** Maximum health points */
     public int maxHp = 120;
+    
+    /** Current health points */
     public int hp = maxHp;
 
     @Override
@@ -34,13 +43,19 @@ public class PorcelainDoll implements Enemy {
     @Override
     public String getDefeatAction() { return "Press ENTER to wake up."; }
 
-    // körperlicher Angriff (z.B. mit Scherben)
+    /**
+     * Shard slash attack using porcelain fragments.
+     * @return Damage dealt (10-15 HP)
+     */
     public int shardSlash() {
-        return 10 + (int)(Math.random() * 6); // 10–15 Schaden
+        return 10 + (int)(Math.random() * 6);
     }
 
-    // psychischer Angriff (Sanity-Schaden, falls du das nutzen willst)
+    /**
+     * Lullaby whisper attack dealing psychological damage.
+     * @return Damage dealt (8-13 HP)
+     */
     public int lullabyWhisper() {
-        return 8 + (int)(Math.random() * 6); // 8–13 Schaden
+        return 8 + (int)(Math.random() * 6);
     }
 }

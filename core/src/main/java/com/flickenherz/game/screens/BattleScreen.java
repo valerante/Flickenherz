@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.Array;
 
 import com.flickenherz.game.entities.Player;
 import com.flickenherz.game.entities.Enemy;
@@ -72,6 +73,9 @@ public class BattleScreen implements Screen {
     private long fightStartTime = 0;
     private int damageTakenThisFight = 0;
     private int perfectDodges = 0;
+    
+    // StringBuilder for text concatenation optimization
+    private final StringBuilder stringBuilder = new StringBuilder(100);
 
     public BattleScreen() {
         this(null);
@@ -254,16 +258,27 @@ public class BattleScreen implements Screen {
         fontBig.getData().setScale(2f);
 
         Enemy enemy = battleController.getCurrent();
-        String enemyName = enemy != null ? enemy.getName() : "Unknown";
-        int hp = enemy != null ? enemy.getHp() : 0;
-        int maxHp = enemy != null ? enemy.getMaxHp() : 0;
-        String enemyInfo = enemyName + "   HP: " + hp + "/" + maxHp;
-        fontBig.draw(batch, enemyInfo, 120, VIRTUAL_HEIGHT - 80);
+        // Optimize string concatenation with StringBuilder
+        stringBuilder.setLength(0);
+        stringBuilder.append(enemy != null ? enemy.getName() : "Unknown");
+        stringBuilder.append("   HP: ");
+        stringBuilder.append(enemy != null ? enemy.getHp() : 0);
+        stringBuilder.append("/");
+        stringBuilder.append(enemy != null ? enemy.getMaxHp() : 0);
+        fontBig.draw(batch, stringBuilder, 120, VIRTUAL_HEIGHT - 80);
 
         font.getData().setScale(1.5f);
-        String playerInfo = girl.name + "   HP: " + girl.hp + "/" + girl.maxHp +
-            "   SAN: " + girl.sanity + "/" + girl.maxSanity;
-        font.draw(batch, playerInfo, 120, 360);
+        stringBuilder.setLength(0);
+        stringBuilder.append(girl.name);
+        stringBuilder.append("   HP: ");
+        stringBuilder.append(girl.hp);
+        stringBuilder.append("/");
+        stringBuilder.append(girl.maxHp);
+        stringBuilder.append("   SAN: ");
+        stringBuilder.append(girl.sanity);
+        stringBuilder.append("/");
+        stringBuilder.append(girl.maxSanity);
+        font.draw(batch, stringBuilder, 120, 360);
     }
 
     // ==== Sprites zeichnen (mit Hit-Animation) ====
@@ -576,25 +591,33 @@ public class BattleScreen implements Screen {
 
         if (!arena.inBulletHell) return;
 
-        // Check collisions with player soul (bullets)
-        for (Bullet b : bulletHell.getBullets()) {
-            if (!b.alive) continue;
+        // Check collisions with player soul (bullets) - optimized with squared distances
+        if (arena.iFrameTimer <= 0f) {
+            Array<Bullet> bullets = bulletHell.getBullets();
+            for (int i = 0, n = bullets.size; i < n; i++) {
+                Bullet b = bullets.get(i);
+                if (!b.alive) continue;
 
-            float dx = b.x - arena.soulX;
-            float dy = b.y - arena.soulY;
-            float r = b.radius + arena.soulRadius;
-            if (dx * dx + dy * dy <= r * r && arena.iFrameTimer <= 0f) {
-                girl.takeDamage(5);
-                damageTakenThisFight += 5;
-                arena.iFrameTimer = 0.5f;
-                b.alive = false;
-                actionText = "You are hit! -5 HP";
-                hitEffects.activateGirlHit();
-                audio.playPlayerHit();
+                float dx = b.x - arena.soulX;
+                float dy = b.y - arena.soulY;
+                float distSq = dx * dx + dy * dy;
+                float r = b.radius + arena.soulRadius;
+                float rSq = r * r;
+                
+                if (distSq <= rSq) {
+                    girl.takeDamage(5);
+                    damageTakenThisFight += 5;
+                    arena.iFrameTimer = 0.5f;
+                    b.alive = false;
+                    actionText = "You are hit! -5 HP";
+                    hitEffects.activateGirlHit();
+                    audio.playPlayerHit();
 
-                if (girl.isDead()) {
-                    endEnemyAttack(true);
-                    return;
+                    if (girl.isDead()) {
+                        endEnemyAttack(true);
+                        return;
+                    }
+                    break; // Only process one collision per frame
                 }
             }
         }
