@@ -1,4 +1,4 @@
-package com.flickenherz.game;
+package com.flickenherz.game.bullet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,7 +14,7 @@ public class Arena {
     public float soulX;
     public float soulY;
     public final float soulRadius = 12f;
-    public float soulSpeed = 450f;
+    public float soulSpeed = 350f;
 
     public boolean inBulletHell = false;
     public float attackTimer = 0f;
@@ -39,10 +39,10 @@ public class Arena {
         float dx = 0;
         float dy = 0;
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) dx -= 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) dx += 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) dy += 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) dy -= 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) dx -= 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) dx += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) dy += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) dy -= 1;
 
         if (dx != 0 || dy != 0) {
             float len = (float) Math.sqrt(dx * dx + dy * dy);

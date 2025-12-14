@@ -9,9 +9,9 @@ public class DesktopLauncher {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 
         config.setTitle("Flickenherz");
-        config.setWindowedMode(1920, 1080);
+        config.setWindowedMode(800, 600);
         config.useVsync(true);
-
+        
         new Lwjgl3Application(new MyGdxGame(), config);
     }
 }

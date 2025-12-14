@@ -1,4 +1,4 @@
-package com.flickenherz.game;
+package com.flickenherz.game.bullet;
 
 public enum BulletPattern {
     HORIZONTAL_WAVE,

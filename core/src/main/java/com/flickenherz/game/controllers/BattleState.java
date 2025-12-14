@@ -1,4 +1,4 @@
-package com.flickenherz.game;
+package com.flickenherz.game.controllers;
 
 public enum BattleState {
     PLAYER_TURN,

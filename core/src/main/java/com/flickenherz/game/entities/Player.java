@@ -1,4 +1,4 @@
-package com.flickenherz.game;
+package com.flickenherz.game.entities;
 
 public class Player {
     public String name;
@@ -6,6 +6,7 @@ public class Player {
     public int maxHp;
     public int sanity;
     public int maxSanity;
+    public int score;
 
     public Player(String name) {
         this.name = name;
@@ -13,6 +14,7 @@ public class Player {
         this.hp = maxHp;
         this.maxSanity = 100;
         this.sanity = maxSanity;
+        this.score = 0;
     }
 
     public int basicAttack() {
@@ -31,5 +33,17 @@ public class Player {
 
     public boolean isDead() {
         return hp <= 0 || sanity <= 0;
+    }
+
+    public void addScore(int points) {
+        score += points;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void resetScore() {
+        score = 0;
     }
 }

@@ -1,4 +1,4 @@
-package com.flickenherz.game;
+package com.flickenherz.game.managers;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,7 +29,9 @@ public class BattleUI {
         fontBig.getData().setScale(2f);
 
         float spacing = 260f;
-        float startX = centerX - spacing * 1.5f;
+        // center the whole menu: compute total width covered by spacing between items
+        float totalSpacing = (menuItems.length - 1) * spacing;
+        float startX = centerX - totalSpacing / 2f;
 
         for (int i = 0; i < menuItems.length; i++) {
             String label = menuItems[i];
@@ -41,5 +43,11 @@ public class BattleUI {
                 fontBig.draw(batch, label, x, baseY);
             }
         }
+    }
+
+    public void drawScore(SpriteBatch batch, int score, int virtualWidth, int virtualHeight) {
+        font.getData().setScale(1.5f);
+        String scoreText = "Score: " + score;
+        font.draw(batch, scoreText, virtualWidth - 300, virtualHeight - 80);
     }
 }

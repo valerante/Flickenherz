@@ -1,4 +1,4 @@
-package com.flickenherz.game;
+package com.flickenherz.game.entities;
 
 public class TeddyBear implements Enemy {
     public String name;

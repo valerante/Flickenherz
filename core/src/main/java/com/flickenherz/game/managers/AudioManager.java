@@ -1,4 +1,4 @@
-package com.flickenherz.game;
+package com.flickenherz.game.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
